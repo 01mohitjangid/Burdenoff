@@ -1,0 +1,88 @@
+// Habit Tracker schema.
+//
+// The one modelling decision worth reading: `CheckIn.localDay` is a string,
+// not a date/timestamp column. A check-in is anchored to a square on the
+// user's calendar, and a `date` column would tempt every driver and ORM in the
+// chain to re-interpret it in some other zone. `checkedInAt` keeps the exact
+// UTC instant for auditing; `localDay` is what the streak logic reads.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  /// IANA time zone chosen at signup, e.g. "Asia/Kolkata".
+  timeZone     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  habits   Habit[]
+  sessions Session[]
+
+  @@map("users")
+}
+
+/// A live login. The session cookie carries only this row's id, so deleting the
+/// row logs that session out immediately — even if someone copied the cookie.
+/// A signed token alone could not do this: it stays valid until it expires, and
+/// nothing the server does can call it back.
+model Session {
+  id     String @id @default(cuid())
+  userId String
+
+  createdAt DateTime @default(now())
+
+  /// Mirrors the token's own expiry. Checked on every read so a row that
+  /// outlives its token is still refused, and so expired rows can be swept.
+  expiresAt DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+model Habit {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  checkIns CheckIn[]
+
+  @@index([userId])
+  @@map("habits")
+}
+
+model CheckIn {
+  id      String @id @default(cuid())
+  habitId String
+
+  /// The exact instant the check-in was recorded, always UTC.
+  checkedInAt DateTime @default(now())
+
+  /// The calendar day it counts for, in the owner's time zone, as YYYY-MM-DD.
+  /// For a backfilled check-in this is a past day while `checkedInAt` is now,
+  /// which is exactly why the two columns are not the same thing.
+  localDay String @db.VarChar(10)
+
+  habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+
+  /// One check-in per habit per local day. The application rejects duplicates
+  /// with a readable error; this constraint is what makes that true under
+  /// concurrent requests as well.
+  @@unique([habitId, localDay])
+  @@map("check_ins")
+}
