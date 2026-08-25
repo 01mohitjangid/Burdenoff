@@ -1,5 +1,6 @@
 import 'server-only';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import type { PublicUser } from '@/lib/api-contract';
 import {
   SESSION_DURATION_SECONDS,
@@ -92,5 +93,17 @@ export async function getCurrentUser(): Promise<PublicUser | null> {
 export async function requireUser(): Promise<PublicUser> {
   const user = await getCurrentUser();
   if (!user) throw ApiError.unauthenticated();
+  return user;
+}
+
+/**
+ * The same check for a page rather than an API route.
+ *
+ * `requireUser` throws a 401, which is the right answer to a fetch and the
+ * wrong one to somebody typing a URL. A page sends them to log in instead.
+ */
+export async function requireUserOrRedirect(): Promise<PublicUser> {
+  const user = await getCurrentUser();
+  if (!user) redirect('/login');
   return user;
 }
