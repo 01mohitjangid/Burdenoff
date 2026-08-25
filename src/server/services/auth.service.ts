@@ -1,14 +1,11 @@
 import 'server-only';
-import { Prisma } from '@prisma/client';
 import type { PublicUser } from '@/lib/api-contract';
 import type { LoginInput, SignupInput } from '@/lib/validation/auth';
 import { ApiError } from '../api-error';
 import { prisma } from '../db';
+import { isUniqueViolation } from '../prisma-errors';
 import { hashPassword, verifyAgainstDecoy, verifyPassword } from '../password';
 import { PUBLIC_USER_SELECT } from './user.service';
-
-/** Postgres unique-constraint violation, as Prisma reports it. */
-const UNIQUE_VIOLATION = 'P2002';
 
 export async function registerUser(input: SignupInput): Promise<PublicUser> {
   const passwordHash = await hashPassword(input.password);
@@ -26,12 +23,7 @@ export async function registerUser(input: SignupInput): Promise<PublicUser> {
     // Checking for an existing row first would still lose the race between the
     // check and the insert. The unique index is the real guard; this turns its
     // error into a readable one.
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === UNIQUE_VIOLATION
-    ) {
-      throw ApiError.emailTaken();
-    }
+    if (isUniqueViolation(error)) throw ApiError.emailTaken();
     throw error;
   }
 }
