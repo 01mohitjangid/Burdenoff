@@ -74,7 +74,14 @@ describe('readJsonBody', () => {
 
   it('rejects a malformed body as a 400, not a crash', async () => {
     expect(await statusOf(jsonRequest('{not json'))).toBe(400);
-    expect(await statusOf(jsonRequest(''))).toBe(400);
+    expect(await statusOf(jsonRequest('[1,2'))).toBe(400);
+  });
+
+  it('treats an empty body as no fields rather than as malformed', async () => {
+    // The one-click check-in button has nothing to send. Making it invent `{}`
+    // would be a trap that only shows up in the browser.
+    await expect(readJsonBody(jsonRequest(''))).resolves.toEqual({});
+    await expect(readJsonBody(jsonRequest('   '))).resolves.toEqual({});
   });
 
   it('rejects an oversized body with 413', async () => {
