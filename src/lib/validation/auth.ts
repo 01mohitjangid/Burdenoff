@@ -1,14 +1,8 @@
 import { z } from 'zod';
+import { MAX_PASSWORD_BYTES, MIN_PASSWORD_LENGTH } from '../limits';
 import { isValidTimeZone } from '../local-day';
 
-export const MIN_PASSWORD_LENGTH = 8;
-
-/**
- * bcrypt reads at most 72 bytes and silently ignores the rest, so two different
- * long passwords that share a 72-byte prefix would both unlock the account.
- * Rejecting is honest; truncating is a hidden security hole.
- */
-export const MAX_PASSWORD_BYTES = 72;
+export { MAX_PASSWORD_BYTES, MIN_PASSWORD_LENGTH } from '../limits';
 
 const emailSchema = z
   .string()
