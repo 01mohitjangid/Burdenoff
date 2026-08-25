@@ -40,11 +40,21 @@ export async function readJsonBody(request: Request): Promise<unknown> {
   requireJsonContentType(request);
 
   const body = await readBodyUnderLimit(request);
+
+  // An empty body means "no fields", not "malformed". The one-click check-in
+  // button has nothing to send, and making it invent `{}` would be a trap.
+  if (body.trim().length === 0) return {};
+
   try {
     return JSON.parse(body);
   } catch {
     throw ApiError.validation('Send a valid JSON body.');
   }
+}
+
+/** The second argument Next hands a dynamic route handler. */
+export interface RouteContext<Params> {
+  params: Promise<Params>;
 }
 
 /**
