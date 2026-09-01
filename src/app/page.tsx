@@ -1,6 +1,7 @@
 import { CalendarCheckIcon, FlameIcon, GlobeIcon } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { PageShell } from '@/components/page-shell';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { getCurrentUser } from '@/server/session';
@@ -29,27 +30,35 @@ export default async function HomePage() {
   if (await getCurrentUser()) redirect('/dashboard');
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center px-4 py-12 sm:px-6">
+    <PageShell className="flex flex-col justify-center py-12 sm:py-16">
       <div className="mb-8 flex justify-end">
         <ThemeToggle />
       </div>
 
-      <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">Habit Tracker</h1>
-      <p className="text-muted-foreground mt-3 max-w-xl text-base sm:text-lg">
-        Check in once a day and watch your streak grow — counted in your own local days,
-        never in elapsed hours.
-      </p>
+      {/* The shell is wide, but a headline and a paragraph are still only
+          readable at a normal measure, so the copy keeps its own cap. */}
+      <div className="max-w-2xl">
+        <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">
+          Habit Tracker
+        </h1>
+        <p className="text-muted-foreground mt-3 text-base sm:text-lg">
+          Check in once a day and watch your streak grow — counted in your own local days,
+          never in elapsed hours.
+        </p>
 
-      <div className="mt-7 flex flex-wrap gap-3">
-        <Button asChild size="lg">
-          <Link href="/signup">Create an account</Link>
-        </Button>
-        <Button asChild size="lg" variant="outline">
-          <Link href="/login">Log in</Link>
-        </Button>
+        <div className="mt-7 flex flex-wrap gap-3">
+          <Button asChild size="lg">
+            <Link href="/signup">Create an account</Link>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <Link href="/login">Log in</Link>
+          </Button>
+        </div>
       </div>
 
-      <ul className="mt-12 grid gap-6 sm:grid-cols-3">
+      {/* The points do span the full shell: three short columns are exactly what
+          the extra width is good for. */}
+      <ul className="mt-12 grid gap-8 sm:mt-16 sm:grid-cols-3">
         {POINTS.map(({ Icon, title, body }) => (
           <li key={title}>
             <div className="bg-primary/10 text-primary flex size-9 items-center justify-center rounded-lg">
@@ -60,6 +69,6 @@ export default async function HomePage() {
           </li>
         ))}
       </ul>
-    </main>
+    </PageShell>
   );
 }

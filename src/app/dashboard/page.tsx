@@ -2,6 +2,7 @@ import { CalendarDaysIcon } from 'lucide-react';
 import { AccountBar } from '@/components/account-bar';
 import { CreateHabitForm } from '@/components/create-habit-form';
 import { HabitCard } from '@/components/habit-card';
+import { PageShell } from '@/components/page-shell';
 import { Badge } from '@/components/ui/badge';
 import { listHabits } from '@/server/services/habit.service';
 import { requireUserOrRedirect } from '@/server/session';
@@ -20,7 +21,7 @@ export default async function DashboardPage() {
   const doneToday = habits.filter((habit) => habit.checkedInToday).length;
 
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
+    <PageShell>
       <header className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -56,7 +57,9 @@ export default async function DashboardPage() {
           </p>
         </div>
       ) : (
-        <ul className="mt-6 flex flex-col gap-4">
+        // A grid rather than a stack: the wide shell is only worth having if the
+        // cards use the width instead of each stretching across it.
+        <ul className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {habits.map((habit) => (
             <li key={habit.id}>
               <HabitCard habit={habit} />
@@ -64,6 +67,6 @@ export default async function DashboardPage() {
           ))}
         </ul>
       )}
-    </main>
+    </PageShell>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { TriangleAlertIcon } from 'lucide-react';
+import { PageShell } from '@/components/page-shell';
 import { Button } from '@/components/ui/button';
 
 interface Props {
@@ -17,7 +18,7 @@ interface Props {
  */
 export default function ErrorBoundary({ reset }: Props) {
   return (
-    <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-start justify-center gap-4 px-4 py-16 sm:px-6">
+    <PageShell width="narrow" className="flex flex-col items-start justify-center gap-4">
       <div className="bg-destructive/10 text-destructive flex size-10 items-center justify-center rounded-lg">
         <TriangleAlertIcon className="size-5" />
       </div>
@@ -30,6 +31,6 @@ export default function ErrorBoundary({ reset }: Props) {
       <Button type="button" onClick={reset}>
         Try again
       </Button>
-    </main>
+    </PageShell>
   );
 }

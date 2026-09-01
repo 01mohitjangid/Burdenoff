@@ -7,6 +7,7 @@ import { BackfillForm } from '@/components/backfill-form';
 import { CheckInButton } from '@/components/check-in-button';
 import { CheckInHistory } from '@/components/check-in-history';
 import { HabitActions } from '@/components/habit-actions';
+import { PageShell } from '@/components/page-shell';
 import { StreakBadge } from '@/components/streak-badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { findHabitDetail } from '@/server/services/habit.service';
@@ -55,7 +56,7 @@ export default async function HabitPage({ params }: Props) {
   const { habit, checkIns, today } = detail;
 
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
+    <PageShell>
       <div className="flex items-center justify-between gap-4">
         <Link
           href="/dashboard"
@@ -67,7 +68,7 @@ export default async function HabitPage({ params }: Props) {
         <AccountBar user={user} />
       </div>
 
-      <header className="mt-6">
+      <header className="mt-6 max-w-3xl">
         <h1 className="text-2xl font-semibold tracking-tight break-words sm:text-3xl">
           {habit.name}
         </h1>
@@ -101,27 +102,28 @@ export default async function HabitPage({ params }: Props) {
         </CardContent>
       </Card>
 
-      <div className="mt-6">
-        <CheckInButton
-          habitId={habit.id}
-          habitName={habit.name}
-          checkedInToday={habit.checkedInToday}
-          size="lg"
-        />
-      </div>
+      {/* Two columns once there is room: everything you *do* to the habit on the
+          left, the record of what you already did on the right. Below `lg` this
+          collapses back to the original single stack, in the same order. */}
+      <div className="mt-6 grid items-start gap-6 lg:grid-cols-2">
+        <div className="flex flex-col gap-6">
+          <CheckInButton
+            habitId={habit.id}
+            habitName={habit.name}
+            checkedInToday={habit.checkedInToday}
+            size="lg"
+          />
 
-      <div className="mt-6">
-        <BackfillForm habitId={habit.id} startedOn={habit.startedOn} today={today} />
-      </div>
+          <BackfillForm habitId={habit.id} startedOn={habit.startedOn} today={today} />
 
-      <section className="mt-6">
-        <h2 className="mb-3 text-base font-semibold">History</h2>
-        <CheckInHistory checkIns={checkIns} today={today} />
-      </section>
+          <HabitActions habit={habit} />
+        </div>
 
-      <div className="mt-6">
-        <HabitActions habit={habit} />
+        <section>
+          <h2 className="mb-3 text-base font-semibold">History</h2>
+          <CheckInHistory checkIns={checkIns} today={today} />
+        </section>
       </div>
-    </main>
+    </PageShell>
   );
 }
