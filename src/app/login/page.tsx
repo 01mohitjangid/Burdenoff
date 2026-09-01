@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { LoginForm } from '@/components/login-form';
+import { PageShell } from '@/components/page-shell';
 import { ThemeToggle } from '@/components/theme-toggle';
 import {
   Card,
@@ -20,7 +21,7 @@ export default async function LoginPage() {
   if (await getCurrentUser()) redirect('/dashboard');
 
   return (
-    <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-10 sm:px-6">
+    <PageShell width="narrow" className="flex flex-col justify-center">
       <div className="mb-4 flex justify-end">
         <ThemeToggle />
       </div>
@@ -44,6 +45,6 @@ export default async function LoginPage() {
           Sign up
         </Link>
       </p>
-    </main>
+    </PageShell>
   );
 }

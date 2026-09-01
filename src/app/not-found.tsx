@@ -1,12 +1,13 @@
 import { SearchXIcon } from 'lucide-react';
 import Link from 'next/link';
+import { PageShell } from '@/components/page-shell';
 import { Button } from '@/components/ui/button';
 
 export const metadata = { title: 'Not found · Habit Tracker' };
 
 export default function NotFound() {
   return (
-    <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-start justify-center gap-4 px-4 py-16 sm:px-6">
+    <PageShell width="narrow" className="flex flex-col items-start justify-center gap-4">
       <div className="bg-muted text-muted-foreground flex size-10 items-center justify-center rounded-lg">
         <SearchXIcon className="size-5" />
       </div>
@@ -19,6 +20,6 @@ export default function NotFound() {
       <Button asChild variant="outline">
         <Link href="/dashboard">Back to your habits</Link>
       </Button>
-    </main>
+    </PageShell>
   );
 }
