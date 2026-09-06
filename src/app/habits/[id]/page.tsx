@@ -6,7 +6,7 @@ import { AccountBar } from '@/components/account-bar';
 import { BackfillForm } from '@/components/habits/backfill-form';
 import { CheckInButton } from '@/components/habits/check-in-button';
 import { CheckInHistory } from '@/components/habits/check-in-history';
-import { HabitActions } from '@/components/habit-actions';
+import { HabitActions } from '@/components/habits/habit-actions';
 import { PageShell } from '@/components/page-shell';
 import { StreakBadge } from '@/components/habits/streak-badge';
 import { Card, CardContent } from '@/components/ui/card';
