@@ -1,5 +1,5 @@
 import { CalendarDaysIcon } from 'lucide-react';
-import { AccountBar } from '@/components/account-bar';
+import { AccountBar } from '@/components/layout/account-bar';
 import { CreateHabitForm } from '@/components/habits/create-habit-form';
 import { HabitCard } from '@/components/habits/habit-card';
 import { PageShell } from '@/components/layout/page-shell';
