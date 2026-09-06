@@ -1,4 +1,4 @@
-import { HabitCardSkeleton } from '@/components/habit-card-skeleton';
+import { HabitCardSkeleton } from '@/components/habits/habit-card-skeleton';
 import { PageShell } from '@/components/page-shell';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';

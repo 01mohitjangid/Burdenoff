@@ -1,7 +1,7 @@
 import { CalendarDaysIcon } from 'lucide-react';
 import { AccountBar } from '@/components/account-bar';
 import { CreateHabitForm } from '@/components/create-habit-form';
-import { HabitCard } from '@/components/habit-card';
+import { HabitCard } from '@/components/habits/habit-card';
 import { PageShell } from '@/components/page-shell';
 import { Badge } from '@/components/ui/badge';
 import { listHabits } from '@/server/services/habit.service';
