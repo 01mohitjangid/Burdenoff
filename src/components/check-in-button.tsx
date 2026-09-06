@@ -6,7 +6,7 @@ import { useState, useTransition } from 'react';
 import { toast } from 'sonner';
 import { messageFor } from '@/client/api-client';
 import { checkInToday } from '@/client/habits.api';
-import { BusyButton } from './busy-button';
+import { BusyButton } from '@/components/common/busy-button';
 import { ErrorBanner } from './error-banner';
 
 interface Props {
