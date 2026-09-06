@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { PageShell } from '@/components/page-shell';
-import { SignupForm } from '@/components/signup-form';
+import { SignupForm } from '@/components/auth/signup-form';
 import { ThemeToggle } from '@/components/theme-toggle';
 import {
   Card,

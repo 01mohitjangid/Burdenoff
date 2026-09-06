@@ -9,7 +9,7 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
 }));
 
-import { SignupForm } from './signup-form';
+import { SignupForm } from '@/components/auth/signup-form';
 
 afterEach(() => {
   cleanup();
