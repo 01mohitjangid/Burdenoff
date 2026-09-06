@@ -2,7 +2,7 @@ import { ChevronRightIcon, FlameIcon, TrophyIcon } from 'lucide-react';
 import Link from 'next/link';
 import type { HabitSummary } from '@/lib/api-contract';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckInButton } from './check-in-button';
+import { CheckInButton } from '@/components/habits/check-in-button';
 import { StreakBadge } from '@/components/habits/streak-badge';
 
 interface Props {
