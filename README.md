@@ -178,7 +178,7 @@ Split by how much a file is allowed to touch.
 src/lib/         pure: no database, no environment, no clock
 src/server/      anything touching infrastructure; services own all Prisma calls
 src/client/      browser-side I/O, the mirror of src/server/
-src/components/  UI, on shadcn/ui primitives in components/ui/
+src/components/  UI, grouped auth/ habits/ layout/ common/, on primitives in ui/
 src/app/         routes and pages
 prisma/          User, Session, Habit, CheckIn
 ```
