@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { HabitSummary } from '@/lib/api-contract';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckInButton } from './check-in-button';
-import { StreakBadge } from './streak-badge';
+import { StreakBadge } from '@/components/habits/streak-badge';
 
 interface Props {
   habit: HabitSummary;

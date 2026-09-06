@@ -8,7 +8,7 @@ import { CheckInButton } from '@/components/check-in-button';
 import { CheckInHistory } from '@/components/check-in-history';
 import { HabitActions } from '@/components/habit-actions';
 import { PageShell } from '@/components/page-shell';
-import { StreakBadge } from '@/components/streak-badge';
+import { StreakBadge } from '@/components/habits/streak-badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { findHabitDetail } from '@/server/services/habit.service';
 import { requireUserOrRedirect } from '@/server/session';
