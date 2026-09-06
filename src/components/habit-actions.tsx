@@ -25,7 +25,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { BusyButton } from '@/components/common/busy-button';
 import { ErrorBanner } from '@/components/common/error-banner';
-import { FieldError } from './field-error';
+import { FieldError } from '@/components/common/field-error';
 
 interface Props {
   habit: HabitSummary;
