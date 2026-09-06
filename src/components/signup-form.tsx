@@ -10,7 +10,7 @@ import { MIN_PASSWORD_LENGTH } from '@/lib/limits';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { BusyButton } from '@/components/common/busy-button';
-import { ErrorBanner } from './error-banner';
+import { ErrorBanner } from '@/components/common/error-banner';
 import { FieldError } from './field-error';
 import { TimeZonePicker } from './time-zone-picker';
 

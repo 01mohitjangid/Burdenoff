@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { messageFor } from '@/client/api-client';
 import { checkInToday } from '@/client/habits.api';
 import { BusyButton } from '@/components/common/busy-button';
-import { ErrorBanner } from './error-banner';
+import { ErrorBanner } from '@/components/common/error-banner';
 
 interface Props {
   habitId: string;
