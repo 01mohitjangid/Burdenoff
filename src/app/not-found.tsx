@@ -1,6 +1,6 @@
 import { SearchXIcon } from 'lucide-react';
 import Link from 'next/link';
-import { PageShell } from '@/components/page-shell';
+import { PageShell } from '@/components/layout/page-shell';
 import { Button } from '@/components/ui/button';
 
 export const metadata = { title: 'Not found · Habit Tracker' };

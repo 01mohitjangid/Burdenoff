@@ -1,7 +1,7 @@
 import { CalendarCheckIcon, FlameIcon, GlobeIcon } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { PageShell } from '@/components/page-shell';
+import { PageShell } from '@/components/layout/page-shell';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { getCurrentUser } from '@/server/session';

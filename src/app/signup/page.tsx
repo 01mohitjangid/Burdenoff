@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { PageShell } from '@/components/page-shell';
+import { PageShell } from '@/components/layout/page-shell';
 import { SignupForm } from '@/components/auth/signup-form';
 import { ThemeToggle } from '@/components/theme-toggle';
 import {

@@ -1,7 +1,7 @@
 'use client';
 
 import { TriangleAlertIcon } from 'lucide-react';
-import { PageShell } from '@/components/page-shell';
+import { PageShell } from '@/components/layout/page-shell';
 import { Button } from '@/components/ui/button';
 
 interface Props {
