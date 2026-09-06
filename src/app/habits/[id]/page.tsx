@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 import { AccountBar } from '@/components/account-bar';
-import { BackfillForm } from '@/components/backfill-form';
+import { BackfillForm } from '@/components/habits/backfill-form';
 import { CheckInButton } from '@/components/habits/check-in-button';
 import { CheckInHistory } from '@/components/habits/check-in-history';
 import { HabitActions } from '@/components/habit-actions';
