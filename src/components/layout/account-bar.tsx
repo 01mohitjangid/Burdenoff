@@ -8,8 +8,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { SignOutButton } from './sign-out-button';
-import { ThemeToggle } from './theme-toggle';
+import { SignOutButton } from '@/components/auth/sign-out-button';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
 
 interface Props {
   user: PublicUser;

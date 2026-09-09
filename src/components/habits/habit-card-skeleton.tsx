@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { StreakBadgeSkeleton } from './streak-badge-skeleton';
+import { StreakBadgeSkeleton } from '@/components/habits/streak-badge-skeleton';
 
 /** The placeholder for one `HabitCard`: name, two streaks, and its button. */
 export function HabitCardSkeleton() {

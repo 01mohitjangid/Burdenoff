@@ -23,9 +23,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { BusyButton } from './busy-button';
-import { ErrorBanner } from './error-banner';
-import { FieldError } from './field-error';
+import { BusyButton } from '@/components/common/busy-button';
+import { ErrorBanner } from '@/components/common/error-banner';
+import { FieldError } from '@/components/common/field-error';
 
 interface Props {
   habit: HabitSummary;

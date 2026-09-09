@@ -1,5 +1,5 @@
-import { PageShell } from '@/components/page-shell';
-import { StreakBadgeSkeleton } from '@/components/streak-badge-skeleton';
+import { PageShell } from '@/components/layout/page-shell';
+import { StreakBadgeSkeleton } from '@/components/habits/streak-badge-skeleton';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 

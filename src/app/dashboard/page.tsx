@@ -1,8 +1,8 @@
 import { CalendarDaysIcon } from 'lucide-react';
-import { AccountBar } from '@/components/account-bar';
-import { CreateHabitForm } from '@/components/create-habit-form';
-import { HabitCard } from '@/components/habit-card';
-import { PageShell } from '@/components/page-shell';
+import { AccountBar } from '@/components/layout/account-bar';
+import { CreateHabitForm } from '@/components/habits/create-habit-form';
+import { HabitCard } from '@/components/habits/habit-card';
+import { PageShell } from '@/components/layout/page-shell';
 import { Badge } from '@/components/ui/badge';
 import { listHabits } from '@/server/services/habit.service';
 import { requireUserOrRedirect } from '@/server/session';
