@@ -23,9 +23,6 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    // `suppressHydrationWarning` is required by next-themes: it writes the
-    // theme class onto <html> before React hydrates, which is deliberately a
-    // server/client difference.
     <html
       suppressHydrationWarning
       lang="en"
