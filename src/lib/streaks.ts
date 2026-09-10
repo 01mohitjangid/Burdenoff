@@ -1,3 +1,4 @@
+import type { RecentDay } from './api-contract';
 import {
   addLocalDays,
   assertLocalDay,
@@ -78,4 +79,26 @@ function countCurrentStreak(days: readonly LocalDay[], today: LocalDay): number 
     streak += 1;
   }
   return streak;
+}
+
+/**
+ * The last `count` calendar days ending today, oldest first.
+ *
+ * The window ends at today rather than at the newest check-in, so every habit's
+ * strip covers the same dates and the columns line up across cards. A habit
+ * created yesterday still renders seven squares; the ones before it existed are
+ * simply not done.
+ */
+export function recentDays(
+  localDays: readonly LocalDay[],
+  today: LocalDay,
+  count = 7
+): RecentDay[] {
+  assertLocalDay(today);
+
+  const done = new Set(localDays);
+  return Array.from({ length: count }, (_, index) => {
+    const day = addLocalDays(today, index - (count - 1));
+    return { day, done: done.has(day) };
+  });
 }

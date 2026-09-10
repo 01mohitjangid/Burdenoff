@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { toLocalDay } from './local-day';
-import { computeStreaks } from './streaks';
+import { computeStreaks, recentDays } from './streaks';
 
 describe('computeStreaks', () => {
   it('returns zeros for a habit with no check-ins', () => {
@@ -125,5 +125,45 @@ describe('computeStreaks', () => {
       currentStreak: 3,
       longestStreak: 3,
     });
+  });
+});
+
+describe('recentDays', () => {
+  it('returns seven days ending today, oldest first', () => {
+    const days = recentDays([], '2026-03-12');
+
+    expect(days).toHaveLength(7);
+    expect(days[0].day).toBe('2026-03-06');
+    expect(days[6].day).toBe('2026-03-12');
+  });
+
+  it('marks only the days that were checked in', () => {
+    const days = recentDays(['2026-03-10', '2026-03-12'], '2026-03-12');
+
+    expect(days.filter((day) => day.done).map((day) => day.day)).toEqual([
+      '2026-03-10',
+      '2026-03-12',
+    ]);
+  });
+
+  it('ignores check-ins outside the window', () => {
+    const days = recentDays(['2026-03-01', '2026-03-12'], '2026-03-12');
+
+    expect(days.filter((day) => day.done)).toHaveLength(1);
+  });
+
+  it('crosses a month boundary', () => {
+    expect(recentDays([], '2026-03-02')[0].day).toBe('2026-02-24');
+  });
+
+  it('counts a leap day as an ordinary square', () => {
+    const days = recentDays(['2024-02-29'], '2024-03-01');
+
+    expect(days[5]).toEqual({ day: '2024-02-29', done: true });
+    expect(days[6]).toEqual({ day: '2024-03-01', done: false });
+  });
+
+  it('rejects a malformed today', () => {
+    expect(() => recentDays([], 'not-a-day')).toThrow();
   });
 });

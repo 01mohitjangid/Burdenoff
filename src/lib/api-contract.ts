@@ -45,6 +45,14 @@ export interface MeResponse {
 }
 
 /** A habit plus the streak numbers the server computed for it. */
+/** One calendar square in a habit's recent-activity strip. */
+export interface RecentDay {
+  /** The local day, `YYYY-MM-DD`. */
+  day: string;
+  /** True when the habit was checked in on that day. */
+  done: boolean;
+}
+
 export interface HabitSummary {
   id: string;
   name: string;
@@ -56,6 +64,8 @@ export interface HabitSummary {
   currentStreak: number;
   longestStreak: number;
   checkedInToday: boolean;
+  /** The last seven local days ending today, oldest first. */
+  recentDays: RecentDay[];
 }
 
 export interface CheckInRecord {
