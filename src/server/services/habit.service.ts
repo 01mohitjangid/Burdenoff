@@ -1,7 +1,7 @@
 import 'server-only';
 import type { CheckInRecord, HabitSummary, PublicUser } from '@/lib/api-contract';
 import { type LocalDay, compareLocalDays, toLocalDay, todayIn } from '@/lib/local-day';
-import { computeStreaks } from '@/lib/streaks';
+import { computeStreaks, recentDays } from '@/lib/streaks';
 import type { CreateHabitInput, UpdateHabitInput } from '@/lib/validation/habit';
 import { ApiError } from '../api-error';
 import { prisma } from '../db';
@@ -90,6 +90,7 @@ export function toHabitSummary(
     currentStreak,
     longestStreak,
     checkedInToday: localDays.includes(today),
+    recentDays: recentDays(localDays, today),
   };
 }
 

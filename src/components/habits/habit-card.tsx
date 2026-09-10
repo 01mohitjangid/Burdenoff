@@ -4,6 +4,7 @@ import type { HabitSummary } from '@/lib/api-contract';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckInButton } from '@/components/habits/check-in-button';
 import { StreakBadge } from '@/components/habits/streak-badge';
+import { WeekStrip } from '@/components/habits/week-strip';
 
 interface Props {
   habit: HabitSummary;
@@ -39,6 +40,8 @@ export function HabitCard({ habit }: Props) {
           />
           <StreakBadge label="Longest" days={habit.longestStreak} Icon={TrophyIcon} />
         </div>
+
+        <WeekStrip days={habit.recentDays} />
 
         <CheckInButton
           habitId={habit.id}

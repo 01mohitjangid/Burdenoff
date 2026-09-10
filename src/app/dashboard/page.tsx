@@ -1,9 +1,9 @@
 import { CalendarDaysIcon } from 'lucide-react';
 import { AccountBar } from '@/components/layout/account-bar';
 import { CreateHabitForm } from '@/components/habits/create-habit-form';
+import { DashboardStats } from '@/components/habits/dashboard-stats';
 import { HabitCard } from '@/components/habits/habit-card';
 import { PageShell } from '@/components/layout/page-shell';
-import { Badge } from '@/components/ui/badge';
 import { listHabits } from '@/server/services/habit.service';
 import { requireUserOrRedirect } from '@/server/session';
 
@@ -17,8 +17,6 @@ export default async function DashboardPage() {
   // A server component is already server code, so it calls the service directly
   // rather than making an HTTP request to its own API.
   const { habits, today } = await listHabits(user);
-
-  const doneToday = habits.filter((habit) => habit.checkedInToday).length;
 
   return (
     <PageShell>
@@ -38,10 +36,8 @@ export default async function DashboardPage() {
       </header>
 
       {habits.length > 0 ? (
-        <div className="mt-6 flex items-center gap-2">
-          <Badge variant={doneToday === habits.length ? 'default' : 'secondary'}>
-            {doneToday} of {habits.length} done today
-          </Badge>
+        <div className="mt-6">
+          <DashboardStats habits={habits} />
         </div>
       ) : null}
 
