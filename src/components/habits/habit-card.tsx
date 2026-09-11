@@ -12,7 +12,12 @@ interface Props {
 
 export function HabitCard({ habit }: Props) {
   return (
-    <Card className="transition-shadow hover:shadow-md">
+    <Card
+      // The fade runs card -> accent, both theme tokens, so it stays subtle in
+      // light mode and does not turn into a bright band in dark mode. `via-card`
+      // holds the flat colour for the first half, so only the bottom corner tints.
+      className="from-card via-card to-accent/70 bg-gradient-to-br transition-shadow hover:shadow-md"
+    >
       <CardContent className="flex flex-col gap-5">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
