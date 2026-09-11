@@ -58,7 +58,10 @@ export function DashboardStats({ habits }: Props) {
   return (
     <dl className="grid grid-cols-2 gap-3 xl:grid-cols-4">
       {tiles.map((tile) => (
-        <div key={tile.label} className="rounded-lg border p-4">
+        <div
+          key={tile.label}
+          className="from-card via-card to-accent/50 rounded-lg border bg-gradient-to-br p-4"
+        >
           <div className="flex items-center gap-2">
             <tile.Icon className="text-muted-foreground size-4 shrink-0" />
             <dt className="text-muted-foreground truncate text-xs font-medium tracking-wide uppercase">
