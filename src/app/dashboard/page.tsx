@@ -1,8 +1,8 @@
 import { CalendarDaysIcon } from 'lucide-react';
-import { AccountBar } from '@/components/layout/account-bar';
 import { CreateHabitForm } from '@/components/habits/create-habit-form';
 import { DashboardStats } from '@/components/habits/dashboard-stats';
 import { HabitCard } from '@/components/habits/habit-card';
+import { Navbar } from '@/components/layout/navbar';
 import { PageShell } from '@/components/layout/page-shell';
 import { listHabits } from '@/server/services/habit.service';
 import { requireUserOrRedirect } from '@/server/session';
@@ -19,8 +19,10 @@ export default async function DashboardPage() {
   const { habits, today } = await listHabits(user);
 
   return (
-    <PageShell>
-      <header className="flex items-start justify-between gap-4">
+    <>
+      <Navbar user={user} />
+
+      <PageShell>
         <div className="min-w-0">
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
             Your habits
@@ -32,37 +34,36 @@ export default async function DashboardPage() {
             <span>{user.timeZone}</span>
           </p>
         </div>
-        <AccountBar user={user} />
-      </header>
 
-      {habits.length > 0 ? (
+        {habits.length > 0 ? (
+          <div className="mt-6">
+            <DashboardStats habits={habits} />
+          </div>
+        ) : null}
+
         <div className="mt-6">
-          <DashboardStats habits={habits} />
+          <CreateHabitForm />
         </div>
-      ) : null}
 
-      <div className="mt-6">
-        <CreateHabitForm />
-      </div>
-
-      {habits.length === 0 ? (
-        <div className="mt-6 rounded-lg border border-dashed p-10 text-center">
-          <p className="font-medium">No habits yet</p>
-          <p className="text-muted-foreground mt-1 text-sm">
-            Add your first one above, then check in once a day.
-          </p>
-        </div>
-      ) : (
-        // A grid rather than a stack: the wide shell is only worth having if the
-        // cards use the width instead of each stretching across it.
-        <ul className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {habits.map((habit) => (
-            <li key={habit.id}>
-              <HabitCard habit={habit} />
-            </li>
-          ))}
-        </ul>
-      )}
-    </PageShell>
+        {habits.length === 0 ? (
+          <div className="mt-6 rounded-lg border border-dashed p-10 text-center">
+            <p className="font-medium">No habits yet</p>
+            <p className="text-muted-foreground mt-1 text-sm">
+              Add your first one above, then check in once a day.
+            </p>
+          </div>
+        ) : (
+          // A grid rather than a stack: the wide shell is only worth having if the
+          // cards use the width instead of each stretching across it.
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {habits.map((habit) => (
+              <li key={habit.id}>
+                <HabitCard habit={habit} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </PageShell>
+    </>
   );
 }

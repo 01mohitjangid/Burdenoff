@@ -2,11 +2,11 @@ import { ArrowLeftIcon, CalendarCheckIcon, FlameIcon, TrophyIcon } from 'lucide-
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
-import { AccountBar } from '@/components/layout/account-bar';
 import { BackfillForm } from '@/components/habits/backfill-form';
 import { CheckInButton } from '@/components/habits/check-in-button';
 import { CheckInHistory } from '@/components/habits/check-in-history';
 import { HabitActions } from '@/components/habits/habit-actions';
+import { Navbar } from '@/components/layout/navbar';
 import { PageShell } from '@/components/layout/page-shell';
 import { StreakBadge } from '@/components/habits/streak-badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -56,8 +56,10 @@ export default async function HabitPage({ params }: Props) {
   const { habit, checkIns, today } = detail;
 
   return (
-    <PageShell>
-      <div className="flex items-center justify-between gap-4">
+    <>
+      <Navbar user={user} />
+
+      <PageShell>
         <Link
           href="/dashboard"
           className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-sm"
@@ -65,65 +67,64 @@ export default async function HabitPage({ params }: Props) {
           <ArrowLeftIcon className="size-4" />
           All habits
         </Link>
-        <AccountBar user={user} />
-      </div>
 
-      <header className="mt-6 max-w-3xl">
-        <h1 className="text-2xl font-semibold tracking-tight break-words sm:text-3xl">
-          {habit.name}
-        </h1>
-        {habit.description ? (
-          <p className="text-muted-foreground mt-1 break-words">{habit.description}</p>
-        ) : null}
-        <p className="text-muted-foreground mt-2 text-sm">
-          Started <span className="tabular-nums">{habit.startedOn}</span>. Today is{' '}
-          <span className="tabular-nums">{today}</span> in {user.timeZone}.
-        </p>
-      </header>
+        <header className="mt-6 max-w-3xl">
+          <h1 className="text-2xl font-semibold tracking-tight break-words sm:text-3xl">
+            {habit.name}
+          </h1>
+          {habit.description ? (
+            <p className="text-muted-foreground mt-1 break-words">{habit.description}</p>
+          ) : null}
+          <p className="text-muted-foreground mt-2 text-sm">
+            Started <span className="tabular-nums">{habit.startedOn}</span>. Today is{' '}
+            <span className="tabular-nums">{today}</span> in {user.timeZone}.
+          </p>
+        </header>
 
-      <Card className="mt-6">
-        <CardContent className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-          <StreakBadge
-            label="Current streak"
-            days={habit.currentStreak}
-            Icon={FlameIcon}
-            tone="primary"
-          />
-          <StreakBadge
-            label="Longest streak"
-            days={habit.longestStreak}
-            Icon={TrophyIcon}
-          />
-          <StreakBadge
-            label="Days recorded"
-            days={checkIns.length}
-            Icon={CalendarCheckIcon}
-          />
-        </CardContent>
-      </Card>
+        <Card className="mt-6">
+          <CardContent className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            <StreakBadge
+              label="Current streak"
+              days={habit.currentStreak}
+              Icon={FlameIcon}
+              tone="primary"
+            />
+            <StreakBadge
+              label="Longest streak"
+              days={habit.longestStreak}
+              Icon={TrophyIcon}
+            />
+            <StreakBadge
+              label="Days recorded"
+              days={checkIns.length}
+              Icon={CalendarCheckIcon}
+            />
+          </CardContent>
+        </Card>
 
-      {/* Two columns once there is room: everything you *do* to the habit on the
+        {/* Two columns once there is room: everything you *do* to the habit on the
           left, the record of what you already did on the right. Below `lg` this
           collapses back to the original single stack, in the same order. */}
-      <div className="mt-6 grid items-start gap-6 lg:grid-cols-2">
-        <div className="flex flex-col gap-6">
-          <CheckInButton
-            habitId={habit.id}
-            habitName={habit.name}
-            checkedInToday={habit.checkedInToday}
-            size="lg"
-          />
+        <div className="mt-6 grid items-start gap-6 lg:grid-cols-2">
+          <div className="flex flex-col gap-6">
+            <CheckInButton
+              habitId={habit.id}
+              habitName={habit.name}
+              checkedInToday={habit.checkedInToday}
+              size="lg"
+            />
 
-          <BackfillForm habitId={habit.id} startedOn={habit.startedOn} today={today} />
+            <BackfillForm habitId={habit.id} startedOn={habit.startedOn} today={today} />
 
-          <HabitActions habit={habit} />
+            <HabitActions habit={habit} />
+          </div>
+
+          <section>
+            <h2 className="mb-3 text-base font-semibold">History</h2>
+            <CheckInHistory checkIns={checkIns} today={today} />
+          </section>
         </div>
-
-        <section>
-          <h2 className="mb-3 text-base font-semibold">History</h2>
-          <CheckInHistory checkIns={checkIns} today={today} />
-        </section>
-      </div>
-    </PageShell>
+      </PageShell>
+    </>
   );
 }
